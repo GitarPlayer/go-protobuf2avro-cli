@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/linkedin/goavro/v2"
+	"github.com/linkedin/goavro"
 	"go.einride.tech/protobuf-avro/protoavro"
 	"google.golang.org/protobuf/types/descriptorpb"
 )
