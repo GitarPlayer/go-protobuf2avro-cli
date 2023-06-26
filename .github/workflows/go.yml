@@ -1,0 +1,36 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+  actions: write
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: almalinux:8.7
+
+    steps:
+    - name: Install Go
+      run: |
+        dnf install -y golang
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build
+      run: go build -o protoavro main.go
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ./protoavro
+        tag_name: ${{ github.sha }}
+        name: Release ${{ github.sha }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
